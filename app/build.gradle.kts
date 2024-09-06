@@ -1,14 +1,14 @@
 plugins {
     alias(libs.plugins.android.application)
-    alias(libs.plugins.jetbrains.kotlin.android)
+    alias(libs.plugins.kotlin.android)
 }
 
 android {
-    namespace = "com.example.prueba"
+    namespace = "com.example.project1"
     compileSdk = 34
 
     defaultConfig {
-        applicationId = "com.example.prueba"
+        applicationId = "com.example.project1"
         minSdk = 26
         targetSdk = 34
         versionCode = 1
