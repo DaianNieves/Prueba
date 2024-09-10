@@ -22,7 +22,11 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.AccountBox
+import androidx.compose.material.icons.filled.AccountCircle
 import androidx.compose.material3.Card
+import androidx.compose.material3.Icon
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -154,7 +158,7 @@ fun ModifierExample3(){
     }
 }
 
-@Preview(showBackground = true)
+//@Preview(showBackground = true)
 @Composable
 fun CustomText(){
     Column{
@@ -173,7 +177,7 @@ fun CustomText(){
     }
 }
 
-@Preview(showBackground = true)
+//@Preview(showBackground = true)
 @Composable
 fun PictureComposable(){
     Column (
@@ -192,7 +196,7 @@ fun PictureComposable(){
 }
 
 
-@Preview(showBackground = true)
+//@Preview(showBackground = true)
 @Composable
 fun Content1(){
     Card(
@@ -224,7 +228,7 @@ fun Content1(){
     }
 }
 
-@Preview(showBackground = true)
+//@Preview(showBackground = true)
 @Composable
 fun Content2(){
     Card(
@@ -254,7 +258,7 @@ fun Content2(){
                     stringResource(R.string.text_card),
                     textAlign = TextAlign.Justify,
                     lineHeight = 18.sp,
-                    maxLines = 5,
+                    maxLines = 4,
                     modifier = Modifier
                         .padding(10.dp)
                 )
@@ -266,6 +270,61 @@ fun Content2(){
     }
 }
 
+@Preview(showBackground = true)
+@Composable
+fun BoxExample(){
+    Box(
+        modifier = Modifier
+            .background(Color.DarkGray)
+            .fillMaxWidth()
+            .padding(5.dp)
+    ){
+        Image(painterResource(R.drawable.android_logo),
+            contentDescription = "Android Logo",
+            contentScale = ContentScale.FillBounds
+        )
+
+        Row(
+            modifier = Modifier
+                .background(Color.Red)
+                .fillMaxWidth()
+                .padding(0.dp,0.dp),
+            horizontalArrangement = Arrangement.Center
+
+        ){
+            Icon(
+                Icons.Filled.AccountBox,
+                contentDescription = "Icon Account"
+            )
+            Text(text = "Text")
+        }
+
+
+
+    }
+}
+
+@Preview(showBackground = true)
+@Composable
+fun BoxExample2(){
+    Box(
+        modifier = Modifier
+            .background(Color.Magenta)
+            .padding(5.dp)
+            .size(250.dp)
+    ){
+        Text(text = "TopStart", Modifier.align(Alignment.TopStart))
+        Text(text = "TopEnd", Modifier.align(Alignment.TopEnd))
+
+        Text(text = "CenterStart", Modifier.align(Alignment.CenterStart))
+        Text(text = "Center", Modifier.align(Alignment.Center))
+        Text(text = "CenterEnd", Modifier.align(Alignment.CenterEnd))
+
+        Text(text = "BottomStart", Modifier.align(Alignment.BottomStart))
+        Text(text = "BottomEnd", Modifier.align(Alignment.BottomEnd))
+
+    }
+}
 
 fun clickAction(){
     println("Column Clicked")
