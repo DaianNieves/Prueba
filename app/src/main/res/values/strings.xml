@@ -1,4 +1,5 @@
 <resources>
     <string name="app_name">Project1</string>
     <string name="hello_world_text">Hello World</string>
+    <string name="text_card">Lorem ipsum dolor sit amet consectetur adipiscing elit, posuere augue phasellus sed nulla purus sociis porttitor, mattis egestas sagittis aptent interdum mauris. Ridiculus cum habitant porttitor iaculis blandit nunc conubia dignissim bibendum torquent, pulvinar erat semper mus velit nisi enim condimentum curabitur, in facilisi ligula tempor placerat taciti cursus laoreet varius. Molestie integer per fames urna curae ridiculus lobortis luctus, purus penatibus sagittis torquent ac commodo nam, diam maecenas cum eget leo parturient nunc.</string>
 </resources>
