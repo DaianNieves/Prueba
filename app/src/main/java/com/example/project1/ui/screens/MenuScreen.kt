@@ -10,7 +10,7 @@ import androidx.navigation.NavController
 fun MenuScreen(navController: NavController){
     Column {
         Text(text = "this is the Menu Screen")
-        Button(onClick =  {navController.navigate(route = "home") } ){
+        Button(onClick =  {navController.navigate(route = "interface") } ){
 
         }
     }
