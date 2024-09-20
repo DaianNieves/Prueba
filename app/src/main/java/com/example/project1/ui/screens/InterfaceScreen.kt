@@ -3,10 +3,12 @@ package com.example.project1.ui.screens
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.horizontalScroll
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxHeight
@@ -16,6 +18,10 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.layout.wrapContentWidth
+import androidx.compose.foundation.lazy.grid.GridCells
+import androidx.compose.foundation.lazy.grid.LazyHorizontalGrid
+import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
@@ -24,11 +30,14 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.AccountBox
 import androidx.compose.material.icons.filled.AccountCircle
 import androidx.compose.material.icons.filled.Add
+import androidx.compose.material.icons.filled.CheckCircle
+import androidx.compose.material.icons.filled.Create
 import androidx.compose.material.icons.filled.DateRange
 import androidx.compose.material.icons.filled.Favorite
 import androidx.compose.material.icons.filled.Info
 import androidx.compose.material.icons.filled.MailOutline
 import androidx.compose.material.icons.filled.Menu
+import androidx.compose.material.icons.filled.Notifications
 import androidx.compose.material.icons.filled.Phone
 import androidx.compose.material.icons.filled.Search
 import androidx.compose.material.icons.filled.ShoppingCart
@@ -42,6 +51,7 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.alpha
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
@@ -63,9 +73,7 @@ fun InterfaceScreen(navController: NavController) {
     val ColorFondo = Color(0xFF232323)
     val ColorBarraSup = Color(0xFF4c4c4c)
     val ColorCont1 = Color(0XFF303030)
-    val ColorCont2 = Color(0XFF1c1c1c)
-
-    //Declaración de Scroll
+    val ColorCont2 = Color(0XFF0f0f0f)
     val scrollState = rememberScrollState()
 
 
@@ -76,7 +84,6 @@ fun InterfaceScreen(navController: NavController) {
     ) {
 
         Box() {
-            // Barra Superior (Fija)
 
             Box(
                 modifier = Modifier
@@ -133,15 +140,11 @@ fun InterfaceScreen(navController: NavController) {
             }
         }
 
-        //Fin de Barra Superior
 
         Spacer(modifier = Modifier.height(8.dp))
 
-        // Contenedor Logo de PS Store
-
         Box(
             modifier = Modifier
-                //.background(Color.Red)
                 .fillMaxWidth()
                 .padding(20.dp, 80.dp, 20.dp, 0.dp)
         ) {
@@ -220,7 +223,7 @@ fun InterfaceScreen(navController: NavController) {
 
         Box(
             modifier = Modifier
-                .padding(0.dp, 130.dp, 0.dp, 80.dp)
+                .padding(0.dp, 130.dp, 0.dp, 100.dp)
         ) {
             Column(
                 modifier = Modifier
@@ -300,7 +303,6 @@ fun InterfaceScreen(navController: NavController) {
                         modifier = Modifier
 
                     ) {
-                        // Sección Imagen Grande
                         Row {
                             Image(
                                 modifier = Modifier
@@ -345,8 +347,6 @@ fun InterfaceScreen(navController: NavController) {
                                 Text(text = "Shop Now", fontSize = 14.sp)
                             }
                         }
-
-                        //
 
                         Spacer(modifier = Modifier.height(10.dp))
 
@@ -448,13 +448,270 @@ fun InterfaceScreen(navController: NavController) {
                                         )
                                     }
                                 }
+
                             }
                         }
+
+
+                        Box(
+                            modifier = Modifier
+                                .fillMaxWidth()
+                                .background(ColorCont2)
+                                .height(220.dp)
+                                .padding(0.dp, 16.dp, 0.dp, 0.dp)
+
+                        ) {
+                            Column(
+
+                            ) {
+                                Row {
+                                    Text(
+                                        modifier = Modifier
+                                            .padding(14.dp, 8.dp, 0.dp, 0.dp),
+                                        text = "Los juegos más populares en tu país",
+                                        color = Color.LightGray,
+                                        fontSize = 16.sp
+                                    )
+                                }
+                                Row(
+                                    modifier = Modifier
+                                        .padding(10.dp, 0.dp, 10.dp, 0.dp)
+
+                                ) {
+                                    LazyHorizontalGrid(
+                                        rows = GridCells.Fixed(count = 1),
+                                        modifier = Modifier.fillMaxSize(),
+                                        contentPadding = PaddingValues(16.dp),
+                                        horizontalArrangement = Arrangement.spacedBy(8.dp),
+                                        verticalArrangement = Arrangement.spacedBy(8.dp)
+
+                                    ) {
+                                        items(4) { index ->
+                                            val drawableRes = when (index) {
+                                                0 -> R.drawable.juego5
+                                                1 -> R.drawable.juego6
+                                                2 -> R.drawable.juego7
+                                                3 -> R.drawable.juego8
+                                                else -> R.drawable.juego5
+                                            }
+                                            Image(
+                                                modifier = Modifier
+                                                    .clip(RoundedCornerShape(8.dp))
+                                                    .width(150.dp)
+                                                    .height(150.dp),
+                                                painter = painterResource(id = drawableRes),
+                                                contentDescription = "Juego $index",
+                                                contentScale = ContentScale.Crop
+                                            )
+                                        }
+                                    }
+                                }
+
+                            }
+                        }
+
+                        Box(
+                            modifier = Modifier
+                                .fillMaxWidth()
+                                .background(ColorCont2)
+                                .height(230.dp)
+                                .padding(0.dp, 5.dp, 0.dp, 20.dp)
+
+                        ) {
+                            Column(
+
+                            ) {
+                                Row {
+                                    Text(
+                                        modifier = Modifier
+                                            .padding(14.dp, 8.dp, 0.dp, 0.dp),
+                                        text = "Nuevos juegos para ti",
+                                        color = Color.LightGray,
+                                        fontSize = 16.sp
+                                    )
+                                }
+                                Row(
+                                    modifier = Modifier
+                                        .padding(10.dp, 0.dp, 10.dp, 0.dp)
+
+                                ) {
+                                    LazyHorizontalGrid(
+                                        rows = GridCells.Fixed(count = 1),
+                                        modifier = Modifier.fillMaxSize(),
+                                        contentPadding = PaddingValues(16.dp),
+                                        horizontalArrangement = Arrangement.spacedBy(8.dp),
+                                        verticalArrangement = Arrangement.spacedBy(8.dp)
+                                    ) {
+                                        items(4) { index ->
+                                            val drawableRes = when (index) {
+                                                0 -> R.drawable.juego9
+                                                1 -> R.drawable.juego10
+                                                2 -> R.drawable.juego11
+                                                3 -> R.drawable.juego12
+                                                else -> R.drawable.juego9
+                                            }
+                                            Image(
+                                                modifier = Modifier
+                                                    .clip(RoundedCornerShape(8.dp))
+                                                    .width(150.dp)
+                                                    .height(150.dp),
+                                                painter = painterResource(id = drawableRes),
+                                                contentDescription = "Juego $index",
+                                                contentScale = ContentScale.Crop
+                                            )
+                                        }
+                                    }
+                                }
+
+                            }
+                        }
+
+                        Box(
+                            modifier = Modifier
+                                .background(ColorCont1)
+                                .padding(0.dp,0.dp,0.dp,15.dp)
+
+                        ) {
+                            Column(
+                                modifier = Modifier
+
+                            ) {
+                                Row {
+                                    Image(
+                                        modifier = Modifier
+                                            .fillMaxWidth()
+                                            .height(230.dp),
+                                        painter = painterResource(id = R.drawable.imagensecundaria),
+                                        contentDescription = "PS Store Logo",
+                                        contentScale = ContentScale.Crop
+                                    )
+                                }
+
+                                Row {
+                                    Text(
+                                        modifier = Modifier
+                                            .padding(14.dp, 10.dp, 0.dp, 0.dp),
+                                        text = "PlayStation Plus: Descuentos",
+                                        color = Color.White,
+                                        fontSize = 24.sp
+                                    )
+                                }
+
+                                Row {
+                                    Text(
+                                        modifier = Modifier
+                                            .padding(14.dp, 8.dp, 0.dp, 0.dp),
+                                        text = "Ahorra en grandes juegos con estos descuentos exclusivos",
+                                        color = Color.LightGray,
+                                        fontSize = 14.sp
+                                    )
+                                }
+
+                                Row {
+                                    Button(
+                                        modifier = Modifier
+                                            .padding(14.dp, 10.dp, 14.dp, 0.dp),
+                                        onClick = { /* No hace nada */ },
+                                        colors = ButtonDefaults.buttonColors(
+                                            containerColor = Color.White,
+                                            contentColor = Color.Black
+                                        ),
+                                    ) {
+                                        Text(text = "Suscribe Now", fontSize = 14.sp)
+                                    }
+                                }
+                            }
+                        }
+
+                        val buttonTexts = listOf("Todos los Juegos", "Todos los Juegos", "Descuentos", "Complementos")
+                        val buttonIcons = listOf(
+                            Icons.Default.CheckCircle,
+                            Icons.Default.CheckCircle,
+                            Icons.Default.Notifications,
+                            Icons.Default.Create
+                        )
+
+                        Box(
+                            modifier = Modifier
+                                .fillMaxWidth()
+                                .background(ColorCont2)
+                                .padding(0.dp, 5.dp, 0.dp, 20.dp)
+                        ) {
+                            Row (
+                                modifier = Modifier
+                                    .padding(14.dp, 8.dp, 0.dp, 0.dp),
+                            ){
+                                Text(
+                                    modifier = Modifier
+                                        .padding(14.dp, 8.dp, 0.dp, 0.dp),
+                                    text = "Nuevos juegos para ti",
+                                    color = Color.LightGray,
+                                    fontSize = 16.sp
+                                )
+                            }
+
+                            Column(
+                                modifier = Modifier
+                                    .padding(0.dp, 36.dp, 0.dp, 0.dp),
+                                horizontalAlignment = Alignment.CenterHorizontally
+
+                            ) {
+
+                                Column(
+                                    modifier = Modifier
+                                        .fillMaxSize()
+                                        .padding(10.dp),
+                                    verticalArrangement = Arrangement.spacedBy(8.dp)
+                                ) {
+
+                                    repeat(2) { rowIndex ->
+                                        Row(
+                                            modifier = Modifier
+                                                .fillMaxWidth()
+                                                .wrapContentWidth(Alignment.CenterHorizontally),
+                                            horizontalArrangement = Arrangement.spacedBy(30.dp)
+                                        ) {
+                                            repeat(2) { columnIndex ->
+                                                val index = rowIndex * 2 + columnIndex
+                                                Box(
+                                                    modifier = Modifier
+                                                        .size(150.dp)
+                                                        .clip(RoundedCornerShape(8.dp))
+                                                        .background(ColorCont1)
+                                                        .clickable { /* Acción del botón */ },
+                                                    contentAlignment = Alignment.Center
+                                                ) {
+                                                    Column(
+                                                        horizontalAlignment = Alignment.CenterHorizontally,
+                                                        verticalArrangement = Arrangement.Center
+                                                    ) {
+                                                        Icon(
+                                                            imageVector = buttonIcons[index],
+                                                            contentDescription = "Ícono del juego",
+                                                            modifier = Modifier.size(40.dp),
+                                                            tint = Color.White
+                                                        )
+                                                        Spacer(modifier = Modifier.height(4.dp))
+                                                        Text(
+                                                            text = buttonTexts[index],
+                                                            fontSize = 14.sp,
+                                                            color = Color.White
+                                                        )
+                                                    }
+                                                }
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        }
+
                     }
                 }
             }
         }
 
+        //Barra de Navegación Inferior
         Box(
             modifier = Modifier
                 .align(Alignment.BottomCenter)
@@ -463,16 +720,15 @@ fun InterfaceScreen(navController: NavController) {
                 modifier = Modifier
                     .fillMaxWidth()
                     .height(100.dp)
-                    .background(ColorFondo)
-                //.background(Color.White)
-
             ) {
 
                 Column {
                     Row(
                         modifier = Modifier
                             .fillMaxWidth()
-                            .padding(20.dp, 12.dp, 20.dp, 0.dp),
+                            .alpha(0.5f)
+                            .background(ColorCont1)
+                            .padding(20.dp, 12.dp, 20.dp, 6.dp),
                         horizontalArrangement = Arrangement.SpaceBetween,
                         verticalAlignment = Alignment.CenterVertically
                     ) {
@@ -541,18 +797,18 @@ fun InterfaceScreen(navController: NavController) {
 
                             )
                         }
-
                     }
                     Row(
                         modifier = Modifier
                             .fillMaxWidth()
-                            .padding(0.dp, 12.dp, 0.dp, 0.dp),
+                            .background(ColorCont1)
+                            .padding(0.dp, 10.dp, 0.dp, 10.dp),
                         horizontalArrangement = Arrangement.Center
                     ) {
                         Text(
                             text = "PS Store",
                             color = Color.LightGray,
-                            fontSize = 18.sp,
+                            fontSize = 16.sp,
                         )
                     }
                 }
