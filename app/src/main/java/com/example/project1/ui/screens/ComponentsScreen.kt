@@ -38,7 +38,7 @@ fun ComponentsScreen (navController: NavController){
                     label = { Text(text = "Content 1") },
                     selected = false,
                     onClick = {
-                        component = "Content1"
+                        component = "Content 1"
                         scope.launch {
                             drawerState.apply {
                                 close()
@@ -52,7 +52,7 @@ fun ComponentsScreen (navController: NavController){
                     label = { Text(text = "Content 2") },
                     selected = false,
                     onClick = {
-                        component = "Content2"
+                        component = "Content 2"
                         scope.launch {
                             drawerState.apply {
                                 close()
@@ -66,10 +66,10 @@ fun ComponentsScreen (navController: NavController){
         //ScreenContent
         Column {
             when(component){
-                "Content1" ->{
+                "Content 1" ->{
                     Content1()
                 }
-                "Content2" ->{
+                "Content 2" ->{
                     Content2()
                 }
             }
