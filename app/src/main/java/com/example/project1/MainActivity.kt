@@ -25,6 +25,7 @@ import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.AccountBox
 import androidx.compose.material.icons.filled.AccountCircle
+import androidx.compose.material3.Button
 import androidx.compose.material3.Card
 import androidx.compose.material3.Icon
 import androidx.compose.material3.Scaffold
@@ -347,7 +348,7 @@ fun clickAction(){
 */
 
 @Composable
-fun ComposeMultiScreenApp(){
+fun ComposeMultiScreenApp() {
     val navController = rememberNavController()
     Surface(color = Color.White) {
         SetupNavGraph(navController = navController)
@@ -355,10 +356,11 @@ fun ComposeMultiScreenApp(){
 }
 
 @Composable
-fun SetupNavGraph(navController: NavHostController){
-    NavHost(navController = navController, startDestination = "menu"){
-        composable("menu"){MenuScreen(navController)}
-        composable("home"){ HomeScreen(navController)}
-        composable("componentes"){ComponentsScreen(navController)}
+fun SetupNavGraph(navController: NavHostController) {
+    NavHost(navController = navController, startDestination = "menu") {
+        composable("menu") { MenuScreen(navController) }
+        composable("home") { HomeScreen(navController) }
+        composable("componentes") { ComponentsScreen(navController) }
     }
 }
+
