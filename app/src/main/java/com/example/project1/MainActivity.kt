@@ -356,7 +356,7 @@ fun ComposeMultiScreenApp(){
 
 @Composable
 fun SetupNavGraph(navController: NavHostController){
-    NavHost(navController = navController, startDestination = "componentes"){
+    NavHost(navController = navController, startDestination = "menu"){
         composable("menu"){MenuScreen(navController)}
         composable("home"){ HomeScreen(navController)}
         composable("componentes"){ComponentsScreen(navController)}

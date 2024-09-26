@@ -79,10 +79,12 @@ fun ComponentsScreen (navController: NavController){
 
 @Composable
 fun Content1(){
-    Text(text = "Content 1")
+    Text(text = "Content 1",modifier = Modifier
+        .padding(0.dp,30.dp,0.dp,0.dp))
 }
 
 @Composable
 fun Content2(){
-    Text(text = "Content 2")
+    Text(text = "Content 2", modifier = Modifier
+        .padding(0.dp,30.dp,0.dp,0.dp))
 }
