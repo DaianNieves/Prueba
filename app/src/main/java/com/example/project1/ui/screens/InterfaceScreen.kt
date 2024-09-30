@@ -34,6 +34,7 @@ import androidx.compose.material.icons.filled.CheckCircle
 import androidx.compose.material.icons.filled.Create
 import androidx.compose.material.icons.filled.DateRange
 import androidx.compose.material.icons.filled.Favorite
+import androidx.compose.material.icons.filled.Home
 import androidx.compose.material.icons.filled.Info
 import androidx.compose.material.icons.filled.MailOutline
 import androidx.compose.material.icons.filled.Menu
@@ -623,12 +624,16 @@ fun InterfaceScreen(navController: NavController) {
                             }
                         }
 
-                        val buttonTexts = listOf("Todos los Juegos", "Todos los Juegos", "Descuentos", "Complementos")
+                        val buttonTexts = listOf("Todos los Juegos", "Todos los Juegos", "Descuentos", "Complementos", "Nuevo Texto", "Otro Texto", "Otro otro texto","Sopa")
                         val buttonIcons = listOf(
                             Icons.Default.CheckCircle,
                             Icons.Default.CheckCircle,
                             Icons.Default.Notifications,
-                            Icons.Default.Create
+                            Icons.Default.Create,
+                            Icons.Default.Create,
+                            Icons.Default.Create,
+                            Icons.Default.Home,
+                            Icons.Default.Home
                         )
 
                         Box(
@@ -637,10 +642,10 @@ fun InterfaceScreen(navController: NavController) {
                                 .background(ColorCont2)
                                 .padding(0.dp, 5.dp, 0.dp, 20.dp)
                         ) {
-                            Row (
+                            Row(
                                 modifier = Modifier
                                     .padding(14.dp, 8.dp, 0.dp, 0.dp),
-                            ){
+                            ) {
                                 Text(
                                     modifier = Modifier
                                         .padding(14.dp, 8.dp, 0.dp, 0.dp),
@@ -654,7 +659,6 @@ fun InterfaceScreen(navController: NavController) {
                                 modifier = Modifier
                                     .padding(0.dp, 36.dp, 0.dp, 0.dp),
                                 horizontalAlignment = Alignment.CenterHorizontally
-
                             ) {
 
                                 Column(
@@ -663,40 +667,44 @@ fun InterfaceScreen(navController: NavController) {
                                         .padding(10.dp),
                                     verticalArrangement = Arrangement.spacedBy(8.dp)
                                 ) {
+                                    val numColumns = 2 // Número de columnas por fila
+                                    val numRows = (buttonTexts.size + numColumns - 1) / numColumns // Calcula cuántas filas se necesitan
 
-                                    repeat(2) { rowIndex ->
+                                    repeat(numRows) { rowIndex ->
                                         Row(
                                             modifier = Modifier
                                                 .fillMaxWidth()
                                                 .wrapContentWidth(Alignment.CenterHorizontally),
                                             horizontalArrangement = Arrangement.spacedBy(30.dp)
                                         ) {
-                                            repeat(2) { columnIndex ->
-                                                val index = rowIndex * 2 + columnIndex
-                                                Box(
-                                                    modifier = Modifier
-                                                        .size(150.dp)
-                                                        .clip(RoundedCornerShape(8.dp))
-                                                        .background(ColorCont1)
-                                                        .clickable { /* Acción del botón */ },
-                                                    contentAlignment = Alignment.Center
-                                                ) {
-                                                    Column(
-                                                        horizontalAlignment = Alignment.CenterHorizontally,
-                                                        verticalArrangement = Arrangement.Center
+                                            repeat(numColumns) { columnIndex ->
+                                                val index = rowIndex * numColumns + columnIndex
+                                                if (index < buttonTexts.size) {
+                                                    Box(
+                                                        modifier = Modifier
+                                                            .size(150.dp)
+                                                            .clip(RoundedCornerShape(8.dp))
+                                                            .background(ColorCont1)
+                                                            .clickable { /* Acción del botón */ },
+                                                        contentAlignment = Alignment.Center
                                                     ) {
-                                                        Icon(
-                                                            imageVector = buttonIcons[index],
-                                                            contentDescription = "Ícono del juego",
-                                                            modifier = Modifier.size(40.dp),
-                                                            tint = Color.White
-                                                        )
-                                                        Spacer(modifier = Modifier.height(4.dp))
-                                                        Text(
-                                                            text = buttonTexts[index],
-                                                            fontSize = 14.sp,
-                                                            color = Color.White
-                                                        )
+                                                        Column(
+                                                            horizontalAlignment = Alignment.CenterHorizontally,
+                                                            verticalArrangement = Arrangement.Center
+                                                        ) {
+                                                            Icon(
+                                                                imageVector = buttonIcons[index],
+                                                                contentDescription = "Ícono del juego",
+                                                                modifier = Modifier.size(40.dp),
+                                                                tint = Color.White
+                                                            )
+                                                            Spacer(modifier = Modifier.height(4.dp))
+                                                            Text(
+                                                                text = buttonTexts[index],
+                                                                fontSize = 14.sp,
+                                                                color = Color.White
+                                                            )
+                                                        }
                                                     }
                                                 }
                                             }
@@ -705,6 +713,7 @@ fun InterfaceScreen(navController: NavController) {
                                 }
                             }
                         }
+
 
                     }
                 }
