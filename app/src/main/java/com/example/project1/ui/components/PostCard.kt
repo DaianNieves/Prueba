@@ -1,9 +1,12 @@
 package com.example.project1.ui.components
 
 import androidx.compose.foundation.Image
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.width
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.Text
@@ -52,5 +55,49 @@ fun PostCard(id:Int, title:String,text:String,image:Painter){
             textAlign = TextAlign.Justify,
             modifier = Modifier
         )
+    }
+}
+
+@Composable
+fun PostCardCompact(id:Int, title:String, text:String, image:Painter){
+    Card(
+        modifier = Modifier
+            .fillMaxWidth()
+            .padding(3.dp),
+        colors = CardDefaults.cardColors(
+            containerColor = Color.Black,
+            contentColor = Color.White
+        )
+
+    ) {
+        Row (
+
+        ){
+            Image(
+                modifier = Modifier
+                    .width(80.dp)
+                    .height(100.dp)
+                    .padding(5.dp),
+                painter = image,
+                contentDescription = "Android Logo",
+                contentScale = ContentScale.FillBounds
+            )
+
+            Column {
+                Text(
+                    text = title,
+                    fontSize = 14.sp,
+                    textAlign = TextAlign.Justify,
+                    modifier = Modifier
+                )
+                Text(
+                    text = text,
+                    fontSize = 13.sp,
+                    textAlign = TextAlign.Justify,
+                    maxLines = 3,
+                    modifier = Modifier
+                )
+            }
+        }
     }
 }
