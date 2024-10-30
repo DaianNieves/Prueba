@@ -54,7 +54,7 @@ fun LoginForm(navController: NavController){
     Card (
         colors = CardDefaults.cardColors(
             contentColor = Color.White,
-            containerColor = Color.DarkGray
+            containerColor = Color.White
         ),
         modifier = Modifier
             .padding(40.dp, 0.dp)
@@ -64,11 +64,11 @@ fun LoginForm(navController: NavController){
             modifier = Modifier
                 .padding(20.dp)
         ){
-            /*AsyncImage(
-                model = "https://lh5.googleusercontent.com/proxy/DY9Doz_RUB_gVRuFMPqBr220_XM8KZ284fLqeL193mtyQQ-aNUu2h3hJd3luCMzW-http://adictosalainformatica.com/wp-content/uploads/2012/04/GitHub-Logo.png",
+            AsyncImage(
+                model = "https://pngimg.com/uploads/github/github_PNG65.png",
                 contentDescription = "Github Logo",
                 contentScale = ContentScale.Fit
-            )*/
+            )
 
             OutlinedTextField(
                 modifier = Modifier
