@@ -61,6 +61,7 @@ dependencies {
     implementation(libs.androidx.material3)
     implementation(libs.androidx.navigation.compose)
     implementation(libs.androidx.adaptive.android)
+    implementation(libs.play.services.maps)
     //implementation(libs.androidx.navigation.runtime.ktx)
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
@@ -69,4 +70,17 @@ dependencies {
     androidTestImplementation(libs.androidx.ui.test.junit4)
     debugImplementation(libs.androidx.ui.tooling)
     debugImplementation(libs.androidx.ui.test.manifest)
+
+    implementation ("com.google.code.gson:gson:2.8.8")
+    implementation ("com.google.maps.android:maps-compose:2.11.0") // Verifica la versión más reciente
+    implementation ("com.google.android.gms:play-services-maps:18.0.2") // Verifica la versión más reciente
+    implementation ("androidx.compose.ui:ui:1.5.0") // Actualiza a la versión de Compose que estés usando
+    implementation ("androidx.compose.ui:ui-tooling:1.5.0")
+    implementation ("androidx.compose.foundation:foundation:1.5.0")
+    implementation ("androidx.compose.material3:material3:1.1.0") // Para Material 3 y los íconos
+    implementation ("androidx.lifecycle:lifecycle-runtime-ktx:2.6.0")
+    implementation ("androidx.lifecycle:lifecycle-viewmodel-compose:2.6.0")
+
+
+
 }
