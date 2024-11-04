@@ -25,6 +25,7 @@ import com.google.maps.android.compose.MarkerInfoWindow
 import com.google.maps.android.compose.rememberCameraPositionState
 import com.google.maps.android.compose.rememberMarkerState
 
+
 @Composable
 fun MapsSearchView(lat: Double, long: Double, address: String){
     val place = LatLng(lat, long) //Coordenadas de lat  y long

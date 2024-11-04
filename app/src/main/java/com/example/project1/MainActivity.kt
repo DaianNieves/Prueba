@@ -57,6 +57,7 @@ import androidx.navigation.compose.rememberNavController
 import com.example.project1.ui.navigation.NavManager
 import com.example.project1.ui.screens.ComponentsScreen
 import com.example.project1.ui.screens.HomeScreen
+import com.example.project1.ui.screens.LocationScreen
 import com.example.project1.ui.screens.MenuScreen
 
 //import androidx.navigation.compose.NavHostController
@@ -66,15 +67,7 @@ class MainActivity : ComponentActivity() {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
         setContent {
-            //ComposeMultiScreenApp()
-            Project1Theme {
-                Surface(
-                    modifier = Modifier.fillMaxSize(),
-                    color = MaterialTheme.colorScheme.background
-                ) {
-                    NavManager(viewModel())
-                }
-            }
+            ComposeMultiScreenApp()
         }
     }
 }
@@ -94,6 +87,7 @@ fun SetupNavGraph(navController: NavHostController) {
         composable("menu") { MenuScreen(navController) }
         composable("home") { HomeScreen(navController) }
         composable("componentes") { ComponentsScreen(navController) }
+        composable("Location"){ LocationScreen((navController)) }
 
     }
 }
