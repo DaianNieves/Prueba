@@ -53,7 +53,8 @@ fun AlarmScreen(onSetAlarm: (Long) -> Unit) {
                     if (delayInMillis > 0) {
                         onSetAlarm(delayInMillis)
                     } else {
-                        Toast.makeText(context, "Selecciona una hora futura", Toast.LENGTH_SHORT).show()
+                        Toast.makeText(context, "Selecciona una hora futura", Toast.LENGTH_SHORT)
+                            .show()
                     }
                 },
                 calendar.get(Calendar.HOUR_OF_DAY),
