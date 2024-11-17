@@ -2,6 +2,7 @@ package com.example.project1
 
 import android.graphics.Picture
 import android.os.Bundle
+import android.widget.Toast
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
@@ -52,9 +53,14 @@ import com.example.project1.ui.theme.Project1Theme
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
+import androidx.work.OneTimeWorkRequestBuilder
+import androidx.work.WorkManager
+import com.example.project1.ui.screens.AlarmScreen
+import com.example.project1.ui.screens.AlarmWorker
 import com.example.project1.ui.screens.ComponentsScreen
 import com.example.project1.ui.screens.HomeScreen
 import com.example.project1.ui.screens.MenuScreen
+import java.util.concurrent.TimeUnit
 
 //import androidx.navigation.compose.NavHostController
 
@@ -111,6 +117,16 @@ class MainActivity : ComponentActivity() {
 
         }
     }
+
+    fun scheduleAlarm(delayInMillis: Long) {
+        val workRequest = OneTimeWorkRequestBuilder<AlarmWorker>()
+            .setInitialDelay(delayInMillis, TimeUnit.MILLISECONDS)
+            .build()
+
+        WorkManager.getInstance(this).enqueue(workRequest)
+        Toast.makeText(this, "Alarma programada", Toast.LENGTH_SHORT).show()
+    }
+
 }
 /*
 @Composable
@@ -361,6 +377,12 @@ fun SetupNavGraph(navController: NavHostController) {
         composable("menu") { MenuScreen(navController) }
         composable("home") { HomeScreen(navController) }
         composable("componentes") { ComponentsScreen(navController) }
+        composable("alarm") {
+            AlarmScreen { delay ->
+                (navController.context as MainActivity).scheduleAlarm(delay)
+            }
+        }
+
     }
 }
 
