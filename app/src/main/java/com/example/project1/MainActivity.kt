@@ -59,6 +59,7 @@ import com.example.project1.ui.screens.AlarmScreen
 import com.example.project1.ui.screens.AlarmWorker
 import com.example.project1.ui.screens.ComponentsScreen
 import com.example.project1.ui.screens.HomeScreen
+import com.example.project1.ui.screens.LocationScreen
 import com.example.project1.ui.screens.MenuScreen
 import java.util.concurrent.TimeUnit
 
@@ -382,6 +383,7 @@ fun SetupNavGraph(navController: NavHostController) {
                 (navController.context as MainActivity).scheduleAlarm(delay)
             }
         }
+        composable("Location"){ LocationScreen((navController)) }
 
     }
 }
