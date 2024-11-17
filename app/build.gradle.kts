@@ -61,6 +61,7 @@ dependencies {
     implementation(libs.androidx.material3)
     implementation(libs.androidx.navigation.compose)
     implementation(libs.androidx.adaptive.android)
+    implementation(libs.androidx.appcompat)
     //implementation(libs.androidx.navigation.runtime.ktx)
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
@@ -82,4 +83,7 @@ dependencies {
     implementation ("androidx.compose.material3:material3:1.1.0")
     implementation ("androidx.lifecycle:lifecycle-runtime-ktx:2.6.0")
     implementation ("androidx.lifecycle:lifecycle-viewmodel-compose:2.6.0")
+
+    implementation("androidx.biometric:biometric:1.1.0")
+    implementation("androidx.asynclayoutinflater:asynclayoutinflater-appcompat:1.1.0-alpha01")
 }
