@@ -57,6 +57,7 @@ import androidx.work.OneTimeWorkRequestBuilder
 import androidx.work.WorkManager
 import com.example.project1.ui.screens.AlarmScreen
 import com.example.project1.ui.screens.AlarmWorker
+import com.example.project1.ui.screens.CalendarAPIScreen
 import com.example.project1.ui.screens.ComponentsScreen
 import com.example.project1.ui.screens.HomeScreen
 import com.example.project1.ui.screens.LocationScreen
@@ -384,6 +385,8 @@ fun SetupNavGraph(navController: NavHostController) {
             }
         }
         composable("Location"){ LocationScreen((navController)) }
+        composable("CalendarAPIScreen"){ CalendarAPIScreen(navController) }
+
 
     }
 }

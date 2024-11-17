@@ -29,5 +29,8 @@ fun MenuScreen(navController: NavController){
         Button(onClick = {navController.navigate(route = "Location")}){
             Text(text = "Location Screen")
         }
+        Button(onClick = {navController.navigate(route = "CalendarAPIScreen")}){
+            Text(text = "Calendar Screen")
+        }
     }
 }
