@@ -23,5 +23,8 @@ fun MenuScreen(navController: NavController){
         Button(onClick =  {navController.navigate(route = "componentes") } ){
             Text(text = "Component Screen")
         }
+        Button(onClick = {navController.navigate(route = "Alarm")}){
+            Text(text = "Alarm Screen")
+        }
     }
 }
