@@ -18,6 +18,7 @@ import com.example.project1.ui.screens.AlarmScreen
 import com.example.project1.ui.screens.AlarmWorker
 import com.example.project1.ui.screens.BiometricsScreen
 import com.example.project1.ui.screens.CalendarAPIScreen
+import com.example.project1.ui.screens.CameraScreen
 import com.example.project1.ui.screens.ComponentsScreen
 import com.example.project1.ui.screens.HomeScreen
 import com.example.project1.ui.screens.LocationScreen
@@ -347,6 +348,7 @@ fun SetupNavGraph(navController: NavHostController, activity: AppCompatActivity)
         composable("Location"){ LocationScreen((navController)) }
         composable("CalendarAPIScreen"){ CalendarAPIScreen(navController) }
         composable("Biometrics") { BiometricsScreen(activity)}
+        composable("Camera") { CameraScreen(navController) }
 
 
     }
