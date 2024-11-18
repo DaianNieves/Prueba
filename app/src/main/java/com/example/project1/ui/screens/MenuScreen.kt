@@ -35,5 +35,8 @@ fun MenuScreen(navController: NavController){
         Button(onClick = {navController.navigate(route = "Biometrics")}){
             Text(text = "Biometrics Screen")
         }
+        Button(onClick = {navController.navigate(route = "Camera")}){
+            Text(text = "Camera Screen")
+        }
     }
 }
