@@ -1,13 +1,18 @@
 package com.example.project1
 
+import android.content.Context
+import android.net.ConnectivityManager
+import android.net.wifi.WifiManager
 import android.os.Bundle
 import android.widget.Toast
+import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.compose.material3.Surface
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalContext
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
@@ -23,6 +28,7 @@ import com.example.project1.ui.screens.ComponentsScreen
 import com.example.project1.ui.screens.HomeScreen
 import com.example.project1.ui.screens.LocationScreen
 import com.example.project1.ui.screens.MenuScreen
+import com.example.project1.ui.screens.WifiDatosScreen
 import java.util.concurrent.TimeUnit
 
 //import androidx.navigation.compose.NavHostController
@@ -349,8 +355,23 @@ fun SetupNavGraph(navController: NavHostController, activity: AppCompatActivity)
         composable("CalendarAPIScreen"){ CalendarAPIScreen(navController) }
         composable("Biometrics") { BiometricsScreen(activity)}
         composable("Camera") { CameraScreen(navController) }
+        composable("WifiDatos") {
+            val context = LocalContext.current as? ComponentActivity
+            if (context != null) {
+                val wifiManager = context.getSystemService(Context.WIFI_SERVICE) as? WifiManager
+                val connectivityManager =
+                    context.getSystemService(Context.CONNECTIVITY_SERVICE) as? ConnectivityManager
 
+                if (wifiManager != null && connectivityManager != null) {
+                    WifiDatosScreen(
+                        wifiManager = wifiManager,
+                        connectivityManager = connectivityManager,
+                        context = context,
 
+                        )
+                }
+            }
+        }
     }
 }
 
