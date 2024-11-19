@@ -19,6 +19,7 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import androidx.work.OneTimeWorkRequestBuilder
 import androidx.work.WorkManager
+import com.example.project1.ui.components.ServiceCard
 import com.example.project1.ui.screens.AlarmScreen
 import com.example.project1.ui.screens.AlarmWorker
 import com.example.project1.ui.screens.BiometricsScreen
@@ -372,6 +373,7 @@ fun SetupNavGraph(navController: NavHostController, activity: AppCompatActivity)
                 }
             }
         }
+        composable("ServiceCard") { ServiceCard(navController) }
     }
 }
 
