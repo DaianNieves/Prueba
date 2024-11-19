@@ -23,5 +23,23 @@ fun MenuScreen(navController: NavController){
         Button(onClick =  {navController.navigate(route = "componentes") } ){
             Text(text = "Component Screen")
         }
+        Button(onClick = {navController.navigate(route = "Alarm")}){
+            Text(text = "Alarm Screen")
+        }
+        Button(onClick = {navController.navigate(route = "Location")}){
+            Text(text = "Location Screen")
+        }
+        Button(onClick = {navController.navigate(route = "CalendarAPIScreen")}){
+            Text(text = "Calendar Screen")
+        }
+        Button(onClick = {navController.navigate(route = "Biometrics")}){
+            Text(text = "Biometrics Screen")
+        }
+        Button(onClick = {navController.navigate(route = "Camera")}){
+            Text(text = "Camera Screen")
+        }
+        Button(onClick = {navController.navigate(route = "WifiDatos")}){
+            Text(text = "WifiDatos Screen")
+        }
     }
 }

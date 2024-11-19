@@ -1,69 +1,44 @@
 package com.example.project1
 
-import android.graphics.Picture
+import android.content.Context
+import android.net.ConnectivityManager
+import android.net.wifi.WifiManager
 import android.os.Bundle
+import android.widget.Toast
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
-import androidx.compose.foundation.Image
-import androidx.compose.foundation.background
-import androidx.compose.foundation.border
-import androidx.compose.foundation.clickable
-import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Box
-import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.fillMaxHeight
-import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.height
-import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.size
-import androidx.compose.foundation.layout.width
-import androidx.compose.foundation.rememberScrollState
-import androidx.compose.foundation.verticalScroll
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.AccountBox
-import androidx.compose.material.icons.filled.AccountCircle
-import androidx.compose.material3.Button
-import androidx.compose.material3.Card
-import androidx.compose.material3.Icon
-import androidx.compose.material3.Scaffold
+import androidx.appcompat.app.AppCompatActivity
 import androidx.compose.material3.Surface
-import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.ui.Alignment
-import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.layout.ContentScale
-import androidx.compose.ui.res.colorResource
-import androidx.compose.ui.res.painterResource
-import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.text.TextStyle
-import androidx.compose.ui.text.font.FontStyle
-import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.text.style.TextAlign
-import androidx.compose.ui.tooling.preview.Preview
-import androidx.compose.ui.unit.dp
-import androidx.compose.ui.unit.sp
+import androidx.compose.ui.platform.LocalContext
 import androidx.navigation.NavHostController
-import com.example.project1.ui.theme.Project1Theme
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
+import androidx.work.OneTimeWorkRequestBuilder
+import androidx.work.WorkManager
+import com.example.project1.ui.screens.AlarmScreen
+import com.example.project1.ui.screens.AlarmWorker
+import com.example.project1.ui.screens.BiometricsScreen
+import com.example.project1.ui.screens.CalendarAPIScreen
+import com.example.project1.ui.screens.CameraScreen
 import com.example.project1.ui.screens.ComponentsScreen
 import com.example.project1.ui.screens.HomeScreen
+import com.example.project1.ui.screens.LocationScreen
 import com.example.project1.ui.screens.MenuScreen
+import com.example.project1.ui.screens.WifiDatosScreen
+import java.util.concurrent.TimeUnit
 
 //import androidx.navigation.compose.NavHostController
 
-class MainActivity : ComponentActivity() {
+class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
         setContent {
-            ComposeMultiScreenApp()
+            ComposeMultiScreenApp(this)
             /*
             /*Project1Theme {
                 Scaffold(modifier = Modifier.fillMaxSize()) { innerPadding ->
@@ -111,6 +86,16 @@ class MainActivity : ComponentActivity() {
 
         }
     }
+
+    fun scheduleAlarm(delayInMillis: Long) {
+        val workRequest = OneTimeWorkRequestBuilder<AlarmWorker>()
+            .setInitialDelay(delayInMillis, TimeUnit.MILLISECONDS)
+            .build()
+
+        WorkManager.getInstance(this).enqueue(workRequest)
+        Toast.makeText(this, "Alarma programada", Toast.LENGTH_SHORT).show()
+    }
+
 }
 /*
 @Composable
@@ -348,19 +333,45 @@ fun clickAction(){
 */
 
 @Composable
-fun ComposeMultiScreenApp() {
+fun ComposeMultiScreenApp(activity: AppCompatActivity){
     val navController = rememberNavController()
-    Surface(color = Color.White) {
-        SetupNavGraph(navController = navController)
+    Surface (color = Color.White) {
+        SetupNavGraph(navController = navController, activity)
     }
 }
 
 @Composable
-fun SetupNavGraph(navController: NavHostController) {
+fun SetupNavGraph(navController: NavHostController, activity: AppCompatActivity) {
     NavHost(navController = navController, startDestination = "menu") {
         composable("menu") { MenuScreen(navController) }
         composable("home") { HomeScreen(navController) }
         composable("componentes") { ComponentsScreen(navController) }
+        composable("alarm") {
+            AlarmScreen { delay ->
+                (navController.context as MainActivity).scheduleAlarm(delay)
+            }
+        }
+        composable("Location"){ LocationScreen((navController)) }
+        composable("CalendarAPIScreen"){ CalendarAPIScreen(navController) }
+        composable("Biometrics") { BiometricsScreen(activity)}
+        composable("Camera") { CameraScreen(navController) }
+        composable("WifiDatos") {
+            val context = LocalContext.current as? ComponentActivity
+            if (context != null) {
+                val wifiManager = context.getSystemService(Context.WIFI_SERVICE) as? WifiManager
+                val connectivityManager =
+                    context.getSystemService(Context.CONNECTIVITY_SERVICE) as? ConnectivityManager
+
+                if (wifiManager != null && connectivityManager != null) {
+                    WifiDatosScreen(
+                        wifiManager = wifiManager,
+                        connectivityManager = connectivityManager,
+                        context = context,
+
+                        )
+                }
+            }
+        }
     }
 }
 
