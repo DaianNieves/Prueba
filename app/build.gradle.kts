@@ -61,6 +61,7 @@ dependencies {
     implementation(libs.androidx.material3)
     implementation(libs.androidx.navigation.compose)
     implementation(libs.androidx.adaptive.android)
+    implementation(libs.androidx.appcompat)
     //implementation(libs.androidx.navigation.runtime.ktx)
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
@@ -69,4 +70,25 @@ dependencies {
     androidTestImplementation(libs.androidx.ui.test.junit4)
     debugImplementation(libs.androidx.ui.tooling)
     debugImplementation(libs.androidx.ui.test.manifest)
+
+    implementation ("androidx.work:work-runtime-ktx:2.8.1")
+    implementation ("androidx.core:core-ktx:1.10.1")
+
+    implementation ("com.google.code.gson:gson:2.8.8")
+    implementation ("com.google.maps.android:maps-compose:2.11.0")
+    implementation ("com.google.android.gms:play-services-maps:18.0.2")
+    implementation ("androidx.compose.ui:ui:1.5.0")
+    implementation ("androidx.compose.ui:ui-tooling:1.5.0")
+    implementation ("androidx.compose.foundation:foundation:1.5.0")
+    implementation ("androidx.compose.material3:material3:1.1.0")
+    implementation ("androidx.lifecycle:lifecycle-runtime-ktx:2.6.0")
+    implementation ("androidx.lifecycle:lifecycle-viewmodel-compose:2.6.0")
+
+    implementation("androidx.biometric:biometric:1.1.0")
+    implementation("androidx.asynclayoutinflater:asynclayoutinflater-appcompat:1.1.0-alpha01")
+
+    implementation("io.coil-kt:coil-compose:2.0.0")
+    implementation("androidx.lifecycle:lifecycle-viewmodel-compose:2.6.1")
+
+    implementation("io.coil-kt:coil-compose:2.4.0")
 }
