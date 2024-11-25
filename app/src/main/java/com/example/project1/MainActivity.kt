@@ -19,6 +19,7 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import androidx.work.OneTimeWorkRequestBuilder
 import androidx.work.WorkManager
+import com.example.project1.ui.components.ServiceCard
 import com.example.project1.ui.screens.AlarmScreen
 import com.example.project1.ui.screens.AlarmWorker
 import com.example.project1.ui.screens.BiometricsScreen
@@ -27,6 +28,7 @@ import com.example.project1.ui.screens.CameraScreen
 import com.example.project1.ui.screens.ComponentsScreen
 import com.example.project1.ui.screens.HomeScreen
 import com.example.project1.ui.screens.LocationScreen
+import com.example.project1.ui.screens.ManageServiceScreen
 import com.example.project1.ui.screens.MenuScreen
 import com.example.project1.ui.screens.WifiDatosScreen
 import java.util.concurrent.TimeUnit
@@ -333,9 +335,9 @@ fun clickAction(){
 */
 
 @Composable
-fun ComposeMultiScreenApp(activity: AppCompatActivity){
+fun ComposeMultiScreenApp(activity: AppCompatActivity) {
     val navController = rememberNavController()
-    Surface (color = Color.White) {
+    Surface(color = Color.White) {
         SetupNavGraph(navController = navController, activity)
     }
 }
@@ -351,9 +353,9 @@ fun SetupNavGraph(navController: NavHostController, activity: AppCompatActivity)
                 (navController.context as MainActivity).scheduleAlarm(delay)
             }
         }
-        composable("Location"){ LocationScreen((navController)) }
-        composable("CalendarAPIScreen"){ CalendarAPIScreen(navController) }
-        composable("Biometrics") { BiometricsScreen(activity)}
+        composable("Location") { LocationScreen((navController)) }
+        composable("CalendarAPIScreen") { CalendarAPIScreen(navController) }
+        composable("Biometrics") { BiometricsScreen(activity) }
         composable("Camera") { CameraScreen(navController) }
         composable("WifiDatos") {
             val context = LocalContext.current as? ComponentActivity
@@ -371,6 +373,10 @@ fun SetupNavGraph(navController: NavHostController, activity: AppCompatActivity)
                         )
                 }
             }
+        }
+        composable("manage-service/{serviceId}") { backStackEntry ->
+            val serviceId = backStackEntry.arguments?.getString("serviceId")
+            ManageServiceScreen(navController, serviceId = serviceId)
         }
     }
 }
