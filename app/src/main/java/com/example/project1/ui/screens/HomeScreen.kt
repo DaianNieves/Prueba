@@ -35,12 +35,10 @@ import com.example.project1.ui.components.ServiceCard
 import com.example.project1.ui.components.ServiceDetailCard
 import com.example.project1.ui.components.TopBar
 
+
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun HomeScreen(
-    navController: NavController,
-    viewModel: ServiceViewModel = androidx.lifecycle.viewmodel.compose.viewModel()
-) {
+fun HomeScreen (navController: NavController, viewModel: ServiceViewModel = androidx.lifecycle.viewmodel.compose.viewModel()) {
     var serviceDetail by remember { mutableStateOf<ServiceModel?>(null) }
     var sheetState = rememberModalBottomSheetState(
         skipPartiallyExpanded = false
@@ -65,16 +63,16 @@ fun HomeScreen(
                 Icon(Icons.Default.Add, contentDescription = "Add icon")
             }
         }
-    ) { innerPadding ->
+    ){ innerPadding ->
 
-        var services by remember { mutableStateOf<List<ServiceModel>>(emptyList()) }
-        if (services.isEmpty()) {
+        var services by remember {mutableStateOf<List<ServiceModel>>(emptyList())}
+        if(services.isEmpty()){
             CircularProgressIndicator()
         }
-        LaunchedEffect(Unit) {
+        LaunchedEffect(Unit){
             viewModel.getServices { response ->
-                if (response.isSuccessful) {
-                    services = response.body() ?: emptyList()
+                if(response.isSuccessful){
+                    services = response.body()?: emptyList()
                 } else {
                     println("failed to load posts")
                 }
@@ -82,41 +80,41 @@ fun HomeScreen(
         }
 
         val listState = rememberLazyListState()
-        LazyColumn(
+        LazyColumn (
             modifier = Modifier
                 .padding(innerPadding)
-                .background(colorResource(R.color.black))
+                .background(colorResource(R.color.white))
                 .fillMaxSize(),
             state = listState
-        ) {
-            Log.d("debuginfo", services.toString())
-            items(services) { service ->
-                ServiceCard(service.id, service.name, service.username, service.imageURL,
+        ){
+            Log.d("debuginfo",services.toString())
+            items(services){ service ->
+                ServiceCard(service.id, service.name , service.username, service.imageURL,
                     onButtonClick = {
-                        viewModel.showService(service.id) { response ->
-                            if (response.isSuccessful) {
+                        viewModel.showService(service.id){ response ->
+                            if(response.isSuccessful){
                                 serviceDetail = response.body()
                             }
                         }
-                        showBottomSheet = true
+                        showBottomSheet=true
                     }
                 )
             }
         }
-        if (showBottomSheet) {
+        if(showBottomSheet){
             ModalBottomSheet(
-                containerColor = colorResource(id = R.color.teal_200),
+                containerColor = colorResource(id = R.color.black),
                 contentColor = Color.White,
                 modifier = Modifier.fillMaxHeight(),
                 onDismissRequest = { showBottomSheet = false },
                 sheetState = sheetState
             ) {
-                ServiceDetailCard(
+                ServiceDetailCard (
                     id = serviceDetail?.id ?: 0,
                     name = serviceDetail?.name ?: "",
-                    username = serviceDetail?.username ?: "",
-                    password = serviceDetail?.password ?: "",
-                    description = serviceDetail?.description ?: "",
+                    username = serviceDetail?.username?:"",
+                    password = serviceDetail?.password?:"",
+                    description = serviceDetail?.description?:"",
                     imageURL = serviceDetail?.imageURL,
                     onEditClick = {
                         showBottomSheet = false

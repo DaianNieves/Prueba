@@ -34,21 +34,20 @@ import com.example.project1.data.model.controller.ServiceViewModel
 import com.example.project1.data.model.model.ServiceModel
 import com.example.project1.ui.components.TopBar
 
-
 @Composable
 fun ManageServiceScreen(
-    navController: NavController,
+    navController : NavController,
     serviceId: String?,
     viewModel: ServiceViewModel = androidx.lifecycle.viewmodel.compose.viewModel()
-) {
-    val service = remember { mutableStateOf(ServiceModel()) }
+){
+    val service = remember {mutableStateOf(ServiceModel())}
     val context = LocalContext.current
-    var bar_title by remember { mutableStateOf("Create new service") }
+    var bar_title by remember {mutableStateOf("Create new service")}
 
-    if (serviceId != null && serviceId != "0") {
+    if(serviceId != null && serviceId != "0"){
         bar_title = "Update service"
-        viewModel.showService(serviceId.toInt()) { response ->
-            if (response.isSuccessful) {
+        viewModel.showService(serviceId.toInt()){ response ->
+            if(response.isSuccessful){
                 service.value.name = response.body()?.name.toString()
                 service.value.username = response.body()?.username.toString()
                 service.value.password = response.body()?.password.toString()
@@ -64,14 +63,14 @@ fun ManageServiceScreen(
     }
 
     Scaffold(
-        topBar = { TopBar(bar_title, navController, true) },
-    ) { innerPadding ->
+        topBar = {TopBar(bar_title, navController, true)},
+    ){ innerPadding ->
         Column(
             modifier = Modifier
                 .fillMaxSize()
                 .background(colorResource(R.color.black))
                 .padding(innerPadding)
-        ) {
+        ){
             Spacer(modifier = Modifier.padding(0.dp, 5.dp))
 
             OutlinedTextField(

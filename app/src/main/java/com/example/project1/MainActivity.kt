@@ -4,6 +4,7 @@ import android.content.Context
 import android.net.ConnectivityManager
 import android.net.wifi.WifiManager
 import android.os.Bundle
+import android.util.Log
 import android.widget.Toast
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
@@ -19,6 +20,8 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import androidx.work.OneTimeWorkRequestBuilder
 import androidx.work.WorkManager
+import com.example.project1.data.model.DataBase.AppDatabase
+import com.example.project1.data.model.DataBase.DatabaseProvider
 import com.example.project1.ui.components.ServiceCard
 import com.example.project1.ui.screens.AlarmScreen
 import com.example.project1.ui.screens.AlarmWorker
@@ -36,8 +39,16 @@ import java.util.concurrent.TimeUnit
 //import androidx.navigation.compose.NavHostController
 
 class MainActivity : AppCompatActivity() {
+    lateinit var database: AppDatabase
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
+        try {
+            database = DatabaseProvider.getDatabase(this)
+            Log.d("DB", "Database loaded Successfully")
+        }catch (exception:Exception){
+            Log.d("DB", "Error:  $exception")
+        }
         enableEdgeToEdge()
         setContent {
             ComposeMultiScreenApp(this)
@@ -344,7 +355,7 @@ fun ComposeMultiScreenApp(activity: AppCompatActivity) {
 
 @Composable
 fun SetupNavGraph(navController: NavHostController, activity: AppCompatActivity) {
-    NavHost(navController = navController, startDestination = "menu") {
+    NavHost(navController = navController, startDestination = "home") {
         composable("menu") { MenuScreen(navController) }
         composable("home") { HomeScreen(navController) }
         composable("componentes") { ComponentsScreen(navController) }
