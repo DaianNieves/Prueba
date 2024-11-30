@@ -1,20 +1,37 @@
 package com.example.project1.data.model.controller
 
+import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.example.project1.data.model.DataBase.AppDatabase
 import com.example.project1.data.model.model.ServiceModel
+import com.example.project1.data.model.model.toServiceEntityList
 import com.example.project1.data.model.network.RetrofitClient
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import retrofit2.Response
 
-class ServiceViewModel:ViewModel() {
+class ServiceViewModel : ViewModel() {
     val api = RetrofitClient.api
 
-    fun getServices(onResult: (Response<List<ServiceModel>>) -> Unit) {
-        viewModelScope.launch {
+    fun getServices(db: AppDatabase) {
+        val serviceDao = db.serviceDao()
+        viewModelScope . launch {
             try {
                 val response = api.getServices()
-                onResult(response)
+                if (response.body()?.count()!! > 0) {
+                    val serviceEntities = response.body()?.toServiceEntityList()
+                    if (serviceEntities != null) {
+                        CoroutineScope(Dispatchers.IO).launch {
+                            try {
+                                serviceDao.insertAll(serviceEntities)
+                            } catch (exception: Exception) {
+                                Log.d("error", exception.toString())
+                            }
+                        }
+                    }
+                }
             } catch (exception: Exception) {
                 print(exception)
             }
@@ -29,7 +46,6 @@ class ServiceViewModel:ViewModel() {
             } catch (exception: Exception) {
                 print(exception)
             }
-
         }
     }
 
@@ -42,7 +58,6 @@ class ServiceViewModel:ViewModel() {
                 print(exception)
             }
         }
-
     }
 
     fun updateService(id: Int, service: ServiceModel, onResult: (Response<ServiceModel>) -> Unit) {
@@ -50,18 +65,16 @@ class ServiceViewModel:ViewModel() {
             viewModelScope.launch {
                 val response = api.updateService(id, service)
                 onResult(response)
-
             }
         } catch (exception: Exception) {
             print(exception)
         }
-
     }
 
     fun deleteService(id: Int, onResult: (Response<ServiceModel>) -> Unit) {
         try {
             viewModelScope.launch {
-                val response = api.deteleService(id)
+                val response = api.deleteService(id)
                 onResult(response)
             }
         } catch (exception: Exception) {
