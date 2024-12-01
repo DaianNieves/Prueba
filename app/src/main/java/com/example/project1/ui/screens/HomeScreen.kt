@@ -48,8 +48,7 @@ fun HomeScreen(
     viewModel: ServiceViewModel = androidx.lifecycle.viewmodel.compose.viewModel()
 ) {
     val db: AppDatabase = DatabaseProvider.getDatabase(LocalContext.current)
-
-    var serviceDetail by remember { mutableStateOf<ServiceModel?>(null) }
+    var serviceDetail by remember { mutableStateOf<ServiceEntity?>(null) }  // Usamos ServiceEntity ahora
     var sheetState = rememberModalBottomSheetState(
         skipPartiallyExpanded = false
     )
@@ -59,6 +58,7 @@ fun HomeScreen(
     var services by remember { mutableStateOf<List<ServiceEntity>>(emptyList()) }
     val serviceDao = db.serviceDao()
 
+    // Scaffold para la estructura básica
     Scaffold(
         topBar = { TopBar("Password Manager", navController, false) },
         bottomBar = {
@@ -80,14 +80,15 @@ fun HomeScreen(
         }
     ) { innerPadding ->
 
-
+        // Si no hay servicios, mostramos un indicador de carga
         if (services.isEmpty()) {
             CircularProgressIndicator()
         }
+
+        // Cargar los servicios desde la base de datos en lugar de la API
         LaunchedEffect(Unit) {
             services = withContext(Dispatchers.IO) {
-                viewModel.getServices(db)
-                serviceDao.getAll()
+                serviceDao.getAll() // Obtenemos los servicios desde la base de datos local
             }
         }
 
@@ -99,23 +100,25 @@ fun HomeScreen(
                 .fillMaxSize(),
             state = listState
         ) {
-            Log.d("debuginfo", services.toString())
             items(services) { service ->
-                ServiceCard(service.id, service.name, service.username, service.imageURL,
+                ServiceCard(
+                    service.id,
+                    service.name,
+                    service.username,
+                    service.imageURL,
                     onButtonClick = {
-                        viewModel.showService(service.id) { response ->
-                            if (response.isSuccessful) {
-                                serviceDetail = response.body()
-                            }
-                        }
-                        showBottomSheet = true
+                        // Al hacer clic, obtenemos el servicio desde la base de datos usando el ID
+                        serviceDetail = service // Usamos la entidad ServiceEntity
+                        showBottomSheet = true // Mostramos el modal con los detalles
                     }
                 )
             }
         }
+
+        // Si el modal está activo, mostrar los detalles del servicio
         if (showBottomSheet) {
             ModalBottomSheet(
-                containerColor = colorResource(id = R.color.teal_700),
+                containerColor = colorResource(id = R.color.teal_200),
                 contentColor = Color.White,
                 modifier = Modifier.fillMaxHeight(),
                 onDismissRequest = { showBottomSheet = false },
