@@ -1,6 +1,7 @@
 package com.example.project1.data.model.network
 
 import com.example.project1.data.model.model.ServiceModel
+import retrofit2.Call
 import retrofit2.Response
 import retrofit2.http.Body
 import retrofit2.http.DELETE
@@ -27,5 +28,8 @@ interface ApiService {
 
     @DELETE("service/{id}")
     suspend fun deleteService(@Path("id") id: Int): Response<ServiceModel>
+
+    @POST("user")
+    fun login(@Body credentials: Map<String, String>): Call<Map<String, Any>>
 
 }

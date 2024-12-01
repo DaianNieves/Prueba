@@ -31,6 +31,8 @@ import com.example.project1.ui.screens.CameraScreen
 import com.example.project1.ui.screens.ComponentsScreen
 import com.example.project1.ui.screens.HomeScreen
 import com.example.project1.ui.screens.LocationScreen
+import com.example.project1.ui.screens.LoginForm
+import com.example.project1.ui.screens.LoginScreen
 import com.example.project1.ui.screens.ManageServiceScreen
 import com.example.project1.ui.screens.MenuScreen
 import com.example.project1.ui.screens.WifiDatosScreen
@@ -355,7 +357,7 @@ fun ComposeMultiScreenApp(activity: AppCompatActivity) {
 
 @Composable
 fun SetupNavGraph(navController: NavHostController, activity: AppCompatActivity) {
-    NavHost(navController = navController, startDestination = "home") {
+    NavHost(navController = navController, startDestination = "LoginScreen") {
         composable("menu") { MenuScreen(navController) }
         composable("home") { HomeScreen(navController) }
         composable("componentes") { ComponentsScreen(navController) }
@@ -385,6 +387,9 @@ fun SetupNavGraph(navController: NavHostController, activity: AppCompatActivity)
                 }
             }
         }
+
+        composable ("LoginScreen"){ LoginScreen(navController) }
+
         composable("manage-service/{serviceId}") { backStackEntry ->
             val serviceId = backStackEntry.arguments?.getString("serviceId")
             ManageServiceScreen(navController, serviceId = serviceId)

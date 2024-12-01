@@ -9,9 +9,9 @@ import com.example.project1.data.model.model.ServiceEntity
 
 @Dao
 interface ServiceDao {
+
     @Query("SELECT * FROM ServiceEntity")
     fun getAll(): List<ServiceEntity>
-
 
     @Query("SELECT * FROM ServiceEntity WHERE id=:ServiceId")
     fun show(ServiceId:Int):ServiceEntity

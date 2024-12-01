@@ -115,7 +115,7 @@ fun HomeScreen(
         }
         if (showBottomSheet) {
             ModalBottomSheet(
-                containerColor = colorResource(id = R.color.teal_200),
+                containerColor = colorResource(id = R.color.teal_700),
                 contentColor = Color.White,
                 modifier = Modifier.fillMaxHeight(),
                 onDismissRequest = { showBottomSheet = false },
