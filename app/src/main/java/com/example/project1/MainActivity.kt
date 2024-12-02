@@ -4,6 +4,7 @@ import android.content.Context
 import android.net.ConnectivityManager
 import android.net.wifi.WifiManager
 import android.os.Bundle
+import android.util.Log
 import android.widget.Toast
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
@@ -19,6 +20,9 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import androidx.work.OneTimeWorkRequestBuilder
 import androidx.work.WorkManager
+import com.example.project1.data.model.DataBase.AppDatabase
+import com.example.project1.data.model.DataBase.DatabaseProvider
+import com.example.project1.ui.components.ServiceCard
 import com.example.project1.ui.screens.AlarmScreen
 import com.example.project1.ui.screens.AlarmWorker
 import com.example.project1.ui.screens.BiometricsScreen
@@ -27,6 +31,9 @@ import com.example.project1.ui.screens.CameraScreen
 import com.example.project1.ui.screens.ComponentsScreen
 import com.example.project1.ui.screens.HomeScreen
 import com.example.project1.ui.screens.LocationScreen
+import com.example.project1.ui.screens.LoginForm
+import com.example.project1.ui.screens.LoginScreen
+import com.example.project1.ui.screens.ManageServiceScreen
 import com.example.project1.ui.screens.MenuScreen
 import com.example.project1.ui.screens.WifiDatosScreen
 import java.util.concurrent.TimeUnit
@@ -34,8 +41,16 @@ import java.util.concurrent.TimeUnit
 //import androidx.navigation.compose.NavHostController
 
 class MainActivity : AppCompatActivity() {
+    lateinit var database: AppDatabase
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
+        try {
+            database = DatabaseProvider.getDatabase(this)
+            Log.d("DB", "Database loaded Successfully")
+        }catch (exception:Exception){
+            Log.d("DB", "Error:  $exception")
+        }
         enableEdgeToEdge()
         setContent {
             ComposeMultiScreenApp(this)
@@ -333,16 +348,16 @@ fun clickAction(){
 */
 
 @Composable
-fun ComposeMultiScreenApp(activity: AppCompatActivity){
+fun ComposeMultiScreenApp(activity: AppCompatActivity) {
     val navController = rememberNavController()
-    Surface (color = Color.White) {
+    Surface(color = Color.White) {
         SetupNavGraph(navController = navController, activity)
     }
 }
 
 @Composable
 fun SetupNavGraph(navController: NavHostController, activity: AppCompatActivity) {
-    NavHost(navController = navController, startDestination = "menu") {
+    NavHost(navController = navController, startDestination = "LoginScreen") {
         composable("menu") { MenuScreen(navController) }
         composable("home") { HomeScreen(navController) }
         composable("componentes") { ComponentsScreen(navController) }
@@ -351,9 +366,9 @@ fun SetupNavGraph(navController: NavHostController, activity: AppCompatActivity)
                 (navController.context as MainActivity).scheduleAlarm(delay)
             }
         }
-        composable("Location"){ LocationScreen((navController)) }
-        composable("CalendarAPIScreen"){ CalendarAPIScreen(navController) }
-        composable("Biometrics") { BiometricsScreen(activity)}
+        composable("Location") { LocationScreen((navController)) }
+        composable("CalendarAPIScreen") { CalendarAPIScreen(navController) }
+        composable("Biometrics") { BiometricsScreen(activity) }
         composable("Camera") { CameraScreen(navController) }
         composable("WifiDatos") {
             val context = LocalContext.current as? ComponentActivity
@@ -371,6 +386,13 @@ fun SetupNavGraph(navController: NavHostController, activity: AppCompatActivity)
                         )
                 }
             }
+        }
+
+        composable ("LoginScreen"){ LoginScreen(navController) }
+
+        composable("manage-service/{serviceId}") { backStackEntry ->
+            val serviceId = backStackEntry.arguments?.getString("serviceId")
+            ManageServiceScreen(navController, serviceId = serviceId)
         }
     }
 }
