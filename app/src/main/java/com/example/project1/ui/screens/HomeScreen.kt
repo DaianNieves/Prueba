@@ -1,9 +1,11 @@
+
 package com.example.project1.ui.screens
 
 import android.util.Log
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
@@ -28,6 +30,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.colorResource
+import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import com.example.project1.R
 import com.example.project1.data.model.DataBase.AppDatabase
@@ -48,23 +51,20 @@ fun HomeScreen(
     viewModel: ServiceViewModel = androidx.lifecycle.viewmodel.compose.viewModel()
 ) {
     val db: AppDatabase = DatabaseProvider.getDatabase(LocalContext.current)
-    var serviceDetail by remember { mutableStateOf<ServiceEntity?>(null) }  // Usamos ServiceEntity ahora
-    var sheetState = rememberModalBottomSheetState(
+    var serviceDetail by remember { mutableStateOf<ServiceEntity?>(null) }
+    val sheetState = rememberModalBottomSheetState(
         skipPartiallyExpanded = false
     )
-
     var showBottomSheet by remember { mutableStateOf(false) }
-
     var services by remember { mutableStateOf<List<ServiceEntity>>(emptyList()) }
     val serviceDao = db.serviceDao()
-
-    // Scaffold para la estructura básica
     Scaffold(
-        topBar = { TopBar("Password Manager", navController, false) },
+        topBar = { TopBar("Password Manager", navController, backButton = true) },
         bottomBar = {
             BottomAppBar(
                 containerColor = Color.Black,
-                contentColor = Color.White
+                contentColor = Color.White,
+                modifier = Modifier.height(20.dp) // Ajusta este valor según tus necesidades
             ) {
             }
         },
@@ -80,15 +80,11 @@ fun HomeScreen(
         }
     ) { innerPadding ->
 
-        // Si no hay servicios, mostramos un indicador de carga
-        if (services.isEmpty()) {
-            CircularProgressIndicator()
-        }
-
-        // Cargar los servicios desde la base de datos en lugar de la API
+        //Button
         LaunchedEffect(Unit) {
             services = withContext(Dispatchers.IO) {
-                serviceDao.getAll() // Obtenemos los servicios desde la base de datos local
+                viewModel.getServices(db)
+                serviceDao.getAll()
             }
         }
 
@@ -107,18 +103,22 @@ fun HomeScreen(
                     service.username,
                     service.imageURL,
                     onButtonClick = {
-                        // Al hacer clic, obtenemos el servicio desde la base de datos usando el ID
-                        serviceDetail = service // Usamos la entidad ServiceEntity
-                        showBottomSheet = true // Mostramos el modal con los detalles
+                        viewModel.showService(db, service.id) { entity ->
+                            if (entity != null) {
+                                serviceDetail = entity
+                                showBottomSheet = true
+                            } else {
+                                Log.d("error", "No se encontró el servicio.")
+                            }
+                        }
                     }
                 )
             }
         }
 
-        // Si el modal está activo, mostrar los detalles del servicio
         if (showBottomSheet) {
             ModalBottomSheet(
-                containerColor = colorResource(id = R.color.teal_200),
+                containerColor = colorResource(R.color.teal_700),
                 contentColor = Color.White,
                 modifier = Modifier.fillMaxHeight(),
                 onDismissRequest = { showBottomSheet = false },

@@ -11,6 +11,7 @@ import retrofit2.http.PUT
 import retrofit2.http.Path
 
 interface ApiService {
+
     @GET("service")
     suspend fun getServices(): Response<List<ServiceModel>>
 
@@ -26,8 +27,12 @@ interface ApiService {
         @Body service: ServiceModel
     ): Response<ServiceModel>
 
+    @GET("service/{id}")
+    suspend fun getServiceById(@Path("id") serviceId: Int): Response<ServiceModel>
+
     @DELETE("service/{id}")
     suspend fun deleteService(@Path("id") id: Int): Response<ServiceModel>
+
 
     @POST("user")
     fun login(@Body credentials: Map<String, String>): Call<Map<String, Any>>
